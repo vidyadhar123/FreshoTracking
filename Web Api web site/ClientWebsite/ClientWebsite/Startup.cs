@@ -1,20 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
+using Microsoft.EntityFrameworkCore;
+using ClientWebsite.Data;
 
 namespace ClientWebsite
 {
     public class Startup
     {
+        readonly string MyAllowSpecificOrigins = "http://localhost:4200";
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -25,7 +21,31 @@ namespace ClientWebsite
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+          
+            services.AddCors(options =>
+            {
+                options.AddDefaultPolicy(builder => { builder.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin().AllowCredentials(); });
+            });
+            services.AddCors(options =>
+            {
+                options.AddPolicy(MyAllowSpecificOrigins,
+                builder =>
+                {
+                    builder.WithOrigins("http://localhost:4200",
+                                        "http://www.contoso.com")
+                    .AllowAnyHeader()
+                                .AllowAnyMethod();
+                });
+            });
+
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+
+       
+            services.AddEntityFrameworkSqlServer()
+                .AddDbContext<OrderManagementDbContext>((serviceProvider, options) =>
+                    options.UseSqlServer(Configuration.GetConnectionString("RoleManagementDbContext"))
+                           .UseInternalServiceProvider(serviceProvider));
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -46,3 +66,4 @@ namespace ClientWebsite
         }
     }
 }
+
