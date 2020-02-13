@@ -10,6 +10,9 @@ import * as XLSX from 'xlsx';
 
 export class UploadDocumentComponent {
     xml = `<note><to>User</to><from>Library</from><heading>Message</heading><body>Some XML to convert to JSON!</body></note>`;
+
+    customerReportsRequireFields = ['order_source', 'txn_id', 'txn_id2', 'date', 'first_name', 'last_name', 'total', 'fee', 'ship_date',
+        , 'carrier', 'method', 'weight', 'tracking', 'postage', 'items', 'qtys', 'skus', 'subtotals'];
     constructor(private ngxXml2jsonService: NgxXml2jsonService) {
     }
 
@@ -48,8 +51,10 @@ export class UploadDocumentComponent {
                 initial[name] = XLSX.utils.sheet_to_json(sheet);
                 return initial;
             }, {});
-            console.log(jsonData);
+            const filterData = jsonData['customers_report (5)'].map(item => {
+                return Object.assign({}, ...this.customerReportsRequireFields.map(key => ({ [key]: item[key] })));
 
+            });
         };
         reader.readAsBinaryString(file);
     }
