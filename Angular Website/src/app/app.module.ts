@@ -6,6 +6,8 @@ import { AppComponent } from './app.component';
 import { UploadModule } from './upload document/upload.module';
 import { HeaderModule } from './header/header.module';
 import { FooterModule } from './footer/footer.module';
+import { UploadService } from './services/uploadService';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -16,9 +18,10 @@ import { FooterModule } from './footer/footer.module';
     AppRoutingModule,
     UploadModule,
     HeaderModule,
-    FooterModule
+    FooterModule,
+    HttpClientModule
   ],
-  providers: [],
+  providers: [UploadService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
