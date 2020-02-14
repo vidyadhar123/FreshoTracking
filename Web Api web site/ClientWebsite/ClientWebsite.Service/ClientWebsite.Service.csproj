@@ -4,4 +4,9 @@
     <TargetFramework>netcoreapp2.2</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\ClientWebsite.Data\ClientWebsite.Data.csproj" />
+    <ProjectReference Include="..\ClientWebsite.ViewModel\ClientWebsite.ViewModel.csproj" />
+  </ItemGroup>
+
 </Project>

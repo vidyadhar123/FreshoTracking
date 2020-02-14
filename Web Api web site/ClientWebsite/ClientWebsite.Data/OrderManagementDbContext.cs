@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using ClientWebsite.Data.Model;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace ClientWebsite.Data
 {
-    public class OrderManagementDbContext: IdentityDbContext
+    public class OrderManagementDbContext : IdentityDbContext
     {
         public OrderManagementDbContext(DbContextOptions<OrderManagementDbContext> options) : base(options)
         {
@@ -26,6 +27,9 @@ namespace ClientWebsite.Data
             foreach (var fk in cascadeFKs)
                 fk.DeleteBehavior = DeleteBehavior.Restrict;
         }
+
+        // Add Entities Here     
+        public DbSet<CustomerReport> CustomerReport { get; set; }
 
     }
 }
