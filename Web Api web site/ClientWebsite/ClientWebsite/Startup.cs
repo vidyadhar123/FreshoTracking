@@ -5,6 +5,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
 using ClientWebsite.Data;
+using ClientWebsite.Service;
+using ClientWebsite.Service.Customer_Report;
 
 namespace ClientWebsite
 {
@@ -40,11 +42,16 @@ namespace ClientWebsite
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
-       
+
             services.AddEntityFrameworkSqlServer()
                 .AddDbContext<OrderManagementDbContext>((serviceProvider, options) =>
                     options.UseSqlServer(Configuration.GetConnectionString("RoleManagementDbContext"))
                            .UseInternalServiceProvider(serviceProvider));
+
+
+            #region add scope for DI
+            services.AddScoped<ICustomer_Report, CustomerReporService>();
+            #endregion
 
         }
 
