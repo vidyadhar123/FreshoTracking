@@ -18,6 +18,10 @@ export class UploadDocumentComponent {
     }
 
 
+    numberOfInputs :number = 1;
+    numberOfInputsArray:any[]= [1];
+
+
     // // file uploader for use to convert xml file to json
     // openXmlFile(fileupload) {
     //     const input = fileupload;
@@ -60,5 +64,13 @@ export class UploadDocumentComponent {
         reader.readAsBinaryString(file);
     }
     // reader.readAsBinaryString(file);
+
+
+
+    addInput(){
+        debugger;
+        this.numberOfInputs = this.numberOfInputs  + 1;
+        this.numberOfInputsArray.push(this.numberOfInputs);
+    }
 }
 

@@ -1,6 +1,13 @@
-<div>
-    <input type="file" (change)="OpenXlsFile($event)" />
+<div class="row">
+    <div class="rightsection">
+        <div *ngFor="let input of numberOfInputsArray">
+            <input type="file" (change)="OpenXlsFile($event)" />
+        </div>
+        
+    </div>
 </div>
-<!-- <div>
-    <input type="file" (change)="openXmlFile($event)" />
-</div> -->
+<div class="row">
+    <div class="buttonaddfile">
+        <button (click)="addInput()">Add more files</button>
+    </div>
+</div>
