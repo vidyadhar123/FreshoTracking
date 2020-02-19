@@ -12,7 +12,7 @@ namespace ClientWebsite
 {
     public class Startup
     {
-        readonly string MyAllowSpecificOrigins = "http://localhost:4200";
+        private readonly string MyAllowSpecificOrigins = "http://localhost:4200";
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -28,17 +28,7 @@ namespace ClientWebsite
             {
                 options.AddDefaultPolicy(builder => { builder.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin().AllowCredentials(); });
             });
-            services.AddCors(options =>
-            {
-                options.AddPolicy(MyAllowSpecificOrigins,
-                builder =>
-                {
-                    builder.WithOrigins("http://localhost:4200",
-                                        "http://www.contoso.com")
-                    .AllowAnyHeader()
-                                .AllowAnyMethod();
-                });
-            });
+            services.AddCors();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
@@ -50,7 +40,7 @@ namespace ClientWebsite
 
 
             #region add scope for DI
-            services.AddScoped<ICustomer_Report, CustomerReporService>();
+            services.AddScoped<ICustomer_Report, CustomerReportService>();
             #endregion
 
         }
@@ -67,6 +57,12 @@ namespace ClientWebsite
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+            app.UseCors(builder => builder
+       .AllowAnyOrigin()
+       .AllowAnyMethod()
+       .AllowAnyHeader()
+       .AllowCredentials());
+
 
             app.UseHttpsRedirection();
             app.UseMvc();

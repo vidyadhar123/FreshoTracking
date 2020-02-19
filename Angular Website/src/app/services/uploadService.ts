@@ -8,6 +8,12 @@ import { map, mergeMap, catchError } from 'rxjs/operators';
 export class UploadService {
     constructor(private http: HttpClient) { }
 
+    getToken() {
+        const newHeaders = new HttpHeaders({ 'Content-Type': 'application/json' });
+        return newHeaders;
+    }
+
+
     get(url: string, itemId: number, clear: number, calc: number): Observable<any> {
         return this.http.get(url)
             .pipe(map((response: Response) => response),
@@ -15,16 +21,33 @@ export class UploadService {
             );
     }
 
-    post(url: string, body): Observable<any> {
-        return this.http.put(url, body)
-            .pipe(map((response: Response) => response.json()),
+
+
+    // insertRecord(url: string, body): Observable<any> {
+    //     debugger;
+    //     return this.http.post(url, body)
+    //         .pipe(map((response: Response) => response.json()),
+    //             catchError(this.handleError)
+    //         );
+    // }
+
+
+
+    insertRecord(url: string, body): Observable<any> {
+        debugger;
+        return this.http.post(url, body, { headers: this.getToken() })
+            .pipe(
                 catchError(this.handleError)
             );
     }
+
 
     private handleError(error: Response) {
         console.error(error);
         return Observable.throw(error || 'Server error');
     }
+
+
+
 
 }

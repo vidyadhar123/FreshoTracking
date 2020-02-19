@@ -4,14 +4,16 @@ using ClientWebsite.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace ClientWebsite.Data.Migrations
 {
     [DbContext(typeof(OrderManagementDbContext))]
-    partial class OrderManagementDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200217103243_update data type")]
+    partial class updatedatatype
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -53,11 +55,11 @@ namespace ClientWebsite.Data.Migrations
 
                     b.Property<double>("total");
 
-                    b.Property<string>("tracking");
+                    b.Property<double>("tracking");
 
                     b.Property<string>("txn_id");
 
-                    b.Property<double>("weight");
+                    b.Property<int>("weight");
 
                     b.HasKey("id");
 

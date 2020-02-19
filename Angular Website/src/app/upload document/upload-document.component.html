@@ -3,11 +3,16 @@
         <div *ngFor="let input of numberOfInputsArray">
             <input type="file" (change)="OpenXlsFile($event)" style="width: 900px; background-color: #ffc88a; margin: 20px;" />
         </div>
-        
+
     </div>
+    <button (click)="SaveCustomerRecordInDatabase()" class="save_btn">Save</button>
 </div>
-<div class="row">
+<p style="text-align: center;
+color: red;">{{msg}}</p>
+<!-- <mat-spinner *ngIf="IsSpinnerProgress"></mat-spinner> -->
+
+<!-- <div class="row">
     <div class="buttonaddfile">
         <button (click)="addInput()">Add more files</button>
     </div>
-</div>
+</div> -->

@@ -2,6 +2,10 @@ import { Component } from '@angular/core';
 import { NgxXml2jsonService } from 'ngx-xml2json';
 import * as XLSX from 'xlsx';
 import { UploadService } from '../services/uploadService';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatProgressSpinner } from '@angular/material/progress-spinner';
+
+
 
 @Component({
     selector: 'app-upload-document',
@@ -11,15 +15,19 @@ import { UploadService } from '../services/uploadService';
 
 export class UploadDocumentComponent {
     xml = `<note><to>User</to><from>Library</from><heading>Message</heading><body>Some XML to convert to JSON!</body></note>`;
-    databseurl = '';
+    databseurl = 'https://localhost:44390/api/CustomerReport/InsertCustomerReport';
+    msg = ''
     customerReportsRequireFields = ['order_source', 'txn_id', 'date', 'first_name', 'last_name', 'total', 'fee', 'ship_date',
         , 'carrier', 'method', 'weight', 'tracking', 'postage', 'items', 'qtys', 'skus', 'subtotals'];
-    constructor(private ngxXml2jsonService: NgxXml2jsonService, private uploadService: UploadService) {
+    filterData: any;
+    IsSpinnerProgress: boolean = false;
+    constructor(private ngxXml2jsonService: NgxXml2jsonService, private uploadService: UploadService,
+    ) {
     }
 
 
-    numberOfInputs :number = 1;
-    numberOfInputsArray:any[]= [1];
+    numberOfInputs: number = 1;
+    numberOfInputsArray: any[] = [1];
 
 
     // // file uploader for use to convert xml file to json
@@ -43,6 +51,8 @@ export class UploadDocumentComponent {
 
     // file uploader for use to convert xls file to json
     OpenXlsFile(ev) {
+        this.msg = ''
+        this.IsSpinnerProgress = false;
         let workBook = null;
         let jsonData = null;
         const reader = new FileReader();
@@ -55,11 +65,15 @@ export class UploadDocumentComponent {
                 initial[name] = XLSX.utils.sheet_to_json(sheet);
                 return initial;
             }, {});
-            const filterData = jsonData['customers_report (5)'].map(item => {
+            this.filterData = jsonData['customers_report (5)'].filter(x => x.order_source !== 'fba').map(item => {
                 return Object.assign({}, ...this.customerReportsRequireFields.map(key => ({ [key]: item[key] })));
-
             });
-            this.uploadService.post(this.databseurl, filterData);
+
+
+
+            this.msg = 'document  uploaded sucessfully';
+            this.IsSpinnerProgress = true;
+
         };
         reader.readAsBinaryString(file);
     }
@@ -67,10 +81,28 @@ export class UploadDocumentComponent {
 
 
 
-    addInput(){
-        debugger;
-        this.numberOfInputs = this.numberOfInputs  + 1;
+    addInput() {
+        this.numberOfInputs = this.numberOfInputs + 1;
         this.numberOfInputsArray.push(this.numberOfInputs);
     }
+
+    SaveCustomerRecordInDatabase() {
+        this.uploadService.insertRecord(this.databseurl, this.filterData).subscribe(res =>
+            this.insertRecordResponse(res), res => this.insertRecordError(res));
+    }
+
+    insertRecordResponse(res) {
+        debugger
+        this.msg = ''
+        if (res.statusCode === 200) {
+            this.IsSpinnerProgress = false;
+            this.msg = 'Record added sucessfully';
+        }
+    }
+
+    insertRecordError(res) {
+
+    }
+
 }
 

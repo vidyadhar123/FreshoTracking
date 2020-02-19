@@ -33,6 +33,14 @@ input {
   margin: 20px 0px 550px 45%;
   
 }
+.save_btn{
+  width: 100px;
+  height: 30px;
+  margin-top: 170px;
+  border-radius: 13px;
+  background: #ffc88a;
+
+}
 
 
 
@@ -47,6 +55,11 @@ input {
   width: 100%;
   height: 70px;
   background: #ff8800;
+  position: fixed;
+  left: 0;
+  bottom: 0;
+
+  
 }
 
 //---------------------------------------------------------Footer Compoment------------------------------------------------------
@@ -230,3 +243,5 @@ input {
   
   
   
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

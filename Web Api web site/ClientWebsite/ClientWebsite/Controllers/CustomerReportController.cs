@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ClientWebsite.Data.Model;
 using ClientWebsite.Service.Customer_Report;
 using ClientWebsite.ViewModel;
 using ClientWebsite.ViewModel.CustomerReportModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+
 
 namespace ClientWebsite.Controllers
 {
@@ -14,23 +16,22 @@ namespace ClientWebsite.Controllers
     [ApiController]
     public class CustomerReportController : ControllerBase
     {
-        private CustomerReporService _customerReporService;
-        public CustomerReportController(CustomerReporService customerReporService)
+        private ICustomer_Report _customerReporService;
+        public CustomerReportController(ICustomer_Report customerReporService)
         {
             _customerReporService = customerReporService;
         }
 
         [HttpPost("InsertCustomerReport")]
         [ProducesResponseType(typeof(ResponseViewModel), 200)]
-
-        public IActionResult InsertCustomerReport(List<CustomerReportModel> input)
+        public async Task<IActionResult> InsertCustomerReport(List<CustomerReport> input)
         {
             try
             {
                 ResponseViewModel model = new ResponseViewModel();
-                var Result = _customerReporService.InsertCustomerReport(input);
+                var Result = await _customerReporService.InsertCustomerReport(input);
                 if (Result == null)
-                    return NotFound(new ResponseViewModel { Message = "No data found", StatusCode = 404, status = false }); ;
+                    return NotFound(new ResponseViewModel { Message = "No data found", StatusCode = 404, status = false }); 
                 model.StatusCode = 200;
                 model.Message = "Success";
                 model.status = true;
