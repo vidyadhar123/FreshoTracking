@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using ClientWebsite.Data;
 using ClientWebsite.Service;
 using ClientWebsite.Service.Customer_Report;
+using ClientWebsite.Service.InvoiceLists;
 
 namespace ClientWebsite
 {
@@ -41,6 +42,7 @@ namespace ClientWebsite
 
             #region add scope for DI
             services.AddScoped<ICustomer_Report, CustomerReportService>();
+            services.AddScoped<IInvoiceList, InvoiceListService>();
             #endregion
 
         }

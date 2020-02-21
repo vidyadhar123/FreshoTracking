@@ -14,11 +14,13 @@ import { MatProgressSpinner } from '@angular/material/progress-spinner';
 })
 
 export class UploadDocumentComponent {
-    xml = `<note><to>User</to><from>Library</from><heading>Message</heading><body>Some XML to convert to JSON!</body></note>`;
-    databseurl = 'https://localhost:44390/api/CustomerReport/InsertCustomerReport';
-    msg = ''
+    msg = '';
     customerReportsRequireFields = ['order_source', 'txn_id', 'date', 'first_name', 'last_name', 'total', 'fee', 'ship_date',
         , 'carrier', 'method', 'weight', 'tracking', 'postage', 'items', 'qtys', 'skus', 'subtotals'];
+    InvoiceList = ['Invoice Number', 'Invoice Date', 'Invoice Amount', 'PO Number', 'Check Number', 'Check Amount',
+        'Check Date', 'Discount'];
+    RemitList = ["balanceDue", "paymentDate", "checkNumber", "refInvoiceAmount", "refOrderNumber",
+        "itemBalanceDue", "refInvoiceNumber", "refInvoiceDate", "refInvoiceDiscAmount", "refInvoiceAdjNumber"];
     filterData: any;
     IsSpinnerProgress: boolean = false;
     constructor(private ngxXml2jsonService: NgxXml2jsonService, private uploadService: UploadService,
@@ -26,32 +28,8 @@ export class UploadDocumentComponent {
     }
 
 
-    numberOfInputs: number = 1;
-    numberOfInputsArray: any[] = [1];
-
-
-    // // file uploader for use to convert xml file to json
-    // openXmlFile(fileupload) {
-    //     const input = fileupload;
-    //     for (var index = 0; index < input.files.length; index++) {
-    //         const reader = new FileReader();
-    //         reader.onload = () => {
-    //             // this 'text' is the content of the file
-    //             const text = reader.result;
-    //         };
-    //         reader.readAsText(input.files[index]);
-
-    //     }
-    //     const parser = new DOMParser();
-    //     const xml = parser.parseFromString(this.xml, 'text/xml');
-    //     const obj = this.ngxXml2jsonService.xmlToJson(xml);
-    //     console.log(obj);
-    // }
-
-
-    // file uploader for use to convert xls file to json
-    OpenXlsFile(ev) {
-        this.msg = ''
+    OpenCustomReportXlsFile(ev) {
+        this.msg = '';
         this.IsSpinnerProgress = false;
         let workBook = null;
         let jsonData = null;
@@ -68,41 +46,124 @@ export class UploadDocumentComponent {
             this.filterData = jsonData['customers_report (5)'].filter(x => x.order_source !== 'fba').map(item => {
                 return Object.assign({}, ...this.customerReportsRequireFields.map(key => ({ [key]: item[key] })));
             });
-
-
-
             this.msg = 'document  uploaded sucessfully';
             this.IsSpinnerProgress = true;
 
         };
         reader.readAsBinaryString(file);
     }
-    // reader.readAsBinaryString(file);
 
 
-
-    addInput() {
-        this.numberOfInputs = this.numberOfInputs + 1;
-        this.numberOfInputsArray.push(this.numberOfInputs);
-    }
+    // addInput() {
+    //     this.numberOfInputs = this.numberOfInputs + 1;
+    //     this.numberOfInputsArray.push(this.numberOfInputs);
+    // }
 
     SaveCustomerRecordInDatabase() {
-        this.uploadService.insertRecord(this.databseurl, this.filterData).subscribe(res =>
-            this.insertRecordResponse(res), res => this.insertRecordError(res));
+        this.uploadService.insertCustomerRecord('https://localhost:44390/api/CustomerReport/InsertCustomerReport', this.filterData)
+            .subscribe(res =>
+                this.insertRecordResponse(res), res => this.insertRecordError(res));
     }
 
     insertRecordResponse(res) {
-        debugger
-        this.msg = ''
-        if (res.statusCode === 200) {
-            this.IsSpinnerProgress = false;
-            this.msg = 'Record added sucessfully';
-        }
+        this.IsSpinnerProgress = false;
+        this.msg = '';
+        this.msg = res.Message;
     }
 
-    insertRecordError(res) {
+    insertRecordError(res) { }
 
+
+    // file uploader for use to convert xls file to json in invoice list
+    OpenInvoiceListXlsFile(ev) {
+        debugger;
+        this.msg = '';
+        this.IsSpinnerProgress = false;
+        let workBook = null;
+        let jsonData = null;
+        const reader = new FileReader();
+        const file = ev.target.files[0];
+        reader.onload = (event) => {
+            const data = reader.result;
+            workBook = XLSX.read(data, { type: 'binary' });
+            jsonData = workBook.SheetNames.reduce((initial, name) => {
+                const sheet = workBook.Sheets[name];
+                initial[name] = XLSX.utils.sheet_to_json(sheet);
+                return initial;
+            }, {});
+            jsonData;
+            debugger;
+            this.filterData = jsonData['1'].map(item => {
+                return Object.assign({}, ...this.InvoiceList.map(key => ({ [key]: item[key] })));
+            });
+            this.msg = 'document  uploaded sucessfully';
+            this.IsSpinnerProgress = true;
+
+        };
+        reader.readAsBinaryString(file);
     }
+
+    SaveInvoiceListInDatabase() {
+        debugger;
+        this.uploadService.insertInvoiceListRecord('https://localhost:44390/api/InvoiceList/InsertInvoiceListReport', this.filterData).
+            subscribe(res =>
+                this.insertInvoiceListRecordResponse(res), res => this.insertInvoiceListRecordError(res));
+    }
+
+    insertInvoiceListRecordResponse(res) {
+        debugger;
+        this.IsSpinnerProgress = false;
+        this.msg = '';
+        this.msg = res.Message;
+        // if (res.statusCode === 200) {
+        // } else {
+        //     this.msg = res.Message;
+        // }
+    }
+
+    insertInvoiceListRecordError(res) { }
+
+    OpenRemitListXlsFile(ev) {
+        debugger;
+        this.msg = '';
+        this.IsSpinnerProgress = false;
+        let workBook = null;
+        let jsonData = null;
+        const reader = new FileReader();
+        const file = ev.target.files[0];
+        reader.onload = (event) => {
+            const data = reader.result;
+            workBook = XLSX.read(data, { type: 'binary' });
+            jsonData = workBook.SheetNames.reduce((initial, name) => {
+                const sheet = workBook.Sheets[name];
+                initial[name] = XLSX.utils.sheet_to_json(sheet);
+                return initial;
+            }, {});
+            jsonData
+            debugger;
+            this.filterData = jsonData['Sheet1'].filter(x => x.order_source !== 'fba').map(item => {
+                return Object.assign({}, ...this.RemitList.map(key => ({ [key]: item[key] })));
+            });
+            this.msg = 'document  uploaded sucessfully';
+            this.IsSpinnerProgress = true;
+
+        };
+        reader.readAsBinaryString(file);
+    }
+
+    SaveRemitListInDatabase() {
+        this.uploadService.insertRemitListRecord('https://localhost:44390/api/RemitList/InsertRemitList', this.filterData).
+            subscribe(res =>
+                this.insertRemitListRecordResponse(res), res => this.insertRemitListRecordError(res));
+    }
+
+    insertRemitListRecordResponse(res) {
+        this.IsSpinnerProgress = false;
+        this.msg = '';
+        this.msg = res.Message;
+    }
+
+    insertRemitListRecordError(res) { }
 
 }
 

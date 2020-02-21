@@ -3,35 +3,33 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using ClientWebsite.Data.Model;
-using ClientWebsite.Service.Customer_Report;
+using ClientWebsite.Service.RemitLists;
 using ClientWebsite.ViewModel;
-using ClientWebsite.ViewModel.CustomerReportModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-
 
 namespace ClientWebsite.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class CustomerReportController : ControllerBase
+    public class RemitListController : ControllerBase
     {
-        private ICustomer_Report _customerReporService;
-        public CustomerReportController(ICustomer_Report customerReporService)
+        private IRemitList _iRemitList;
+        public RemitListController(IRemitList _IRemitList)
         {
-            _customerReporService = customerReporService;
+            _iRemitList = _IRemitList;
         }
 
-        [HttpPost("InsertCustomerReport")]
+        [HttpPost("InsertRemitList")]
         [ProducesResponseType(typeof(ResponseViewModel), 200)]
-        public async Task<IActionResult> InsertCustomerReport(List<CustomerReport> input)
+        public async Task<IActionResult> InsertRemitList(List<RemitList> input)
         {
             try
             {
                 ResponseViewModel model = new ResponseViewModel();
-                var Result = await _customerReporService.InsertCustomerReport(input);
+                var Result = await _iRemitList.InsertRemitListRecord(input);
                 if (Result == null)
-                    return NotFound(new ResponseViewModel { Message = "No data found", StatusCode = 404, status = false }); 
+                    return NotFound(new ResponseViewModel { Message = "No data found", StatusCode = 404, status = false });
                 model.StatusCode = 200;
                 model.Message = "Your File Uploaded Successfully";
                 model.status = true;

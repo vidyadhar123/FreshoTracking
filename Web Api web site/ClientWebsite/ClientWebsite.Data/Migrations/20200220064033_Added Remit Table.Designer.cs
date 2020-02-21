@@ -4,14 +4,16 @@ using ClientWebsite.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace ClientWebsite.Data.Migrations
 {
     [DbContext(typeof(OrderManagementDbContext))]
-    partial class OrderManagementDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200220064033_Added Remit Table")]
+    partial class AddedRemitTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -107,7 +109,7 @@ namespace ClientWebsite.Data.Migrations
 
                     b.Property<long>("refInvoiceAdjNumber");
 
-                    b.Property<int>("refInvoiceAmount");
+                    b.Property<double>("refInvoiceAmount");
 
                     b.Property<long>("refInvoiceDate");
 
