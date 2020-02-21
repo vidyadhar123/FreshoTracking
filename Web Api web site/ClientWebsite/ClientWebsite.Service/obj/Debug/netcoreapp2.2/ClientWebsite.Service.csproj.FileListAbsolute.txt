@@ -12,3 +12,5 @@ D:\FreshoTracking\Web Api web site\ClientWebsite\ClientWebsite.Service\bin\Debug
 D:\FreshoTracking\Web Api web site\ClientWebsite\ClientWebsite.Service\bin\Debug\netcoreapp2.2\ClientWebsite.Data.pdb
 D:\FreshoTracking\Web Api web site\ClientWebsite\ClientWebsite.Service\bin\Debug\netcoreapp2.2\ClientWebsite.ViewModel.pdb
 D:\FreshoTracking\Web Api web site\ClientWebsite\ClientWebsite.Service\obj\Debug\netcoreapp2.2\ClientWebsite.Service.csproj.CopyComplete
+D:\FreshoTracking\Web Api web site\ClientWebsite\ClientWebsite.Service\bin\Debug\netcoreapp2.2\Newtonsoft.Json.dll
+D:\FreshoTracking\Web Api web site\ClientWebsite\ClientWebsite.Service\bin\Debug\netcoreapp2.2\Newtonsoft.Json.xml

@@ -30,6 +30,8 @@ namespace ClientWebsite.Data
 
         // Add Entities Here     
         public DbSet<CustomerReport> CustomerReport { get; set; }
+        public DbSet<InvoiceList> InvoiceList { get; set; }
+        public DbSet<RemitList> RemitLists { get; set; }
 
     }
 }

@@ -8,7 +8,7 @@ import { map, mergeMap, catchError } from 'rxjs/operators';
 export class UploadService {
     constructor(private http: HttpClient) { }
 
-    getToken() {
+    getHeader() {
         const newHeaders = new HttpHeaders({ 'Content-Type': 'application/json' });
         return newHeaders;
     }
@@ -23,24 +23,29 @@ export class UploadService {
 
 
 
-    // insertRecord(url: string, body): Observable<any> {
-    //     debugger;
-    //     return this.http.post(url, body)
-    //         .pipe(map((response: Response) => response.json()),
-    //             catchError(this.handleError)
-    //         );
-    // }
 
-
-
-    insertRecord(url: string, body): Observable<any> {
+    insertCustomerRecord(url: string, body): Observable<any> {
         debugger;
-        return this.http.post(url, body, { headers: this.getToken() })
+        return this.http.post(url, body, { headers: this.getHeader() })
             .pipe(
                 catchError(this.handleError)
             );
     }
 
+    insertInvoiceListRecord(url: string, body): Observable<any> {
+        return this.http.post(url, body, { headers: this.getHeader() })
+            .pipe(
+                catchError(this.handleError)
+            );
+    }
+
+    insertRemitListRecord(url: string, body): Observable<any> {
+        debugger;
+        return this.http.post(url, body, { headers: this.getHeader() })
+            .pipe(
+                catchError(this.handleError)
+            );
+    }
 
     private handleError(error: Response) {
         console.error(error);

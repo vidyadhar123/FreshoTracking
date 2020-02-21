@@ -4,14 +4,16 @@ using ClientWebsite.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace ClientWebsite.Data.Migrations
 {
     [DbContext(typeof(OrderManagementDbContext))]
-    partial class OrderManagementDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200219140618_added Invoice list table(1)")]
+    partial class addedInvoicelisttable1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -89,37 +91,6 @@ namespace ClientWebsite.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("InvoiceList");
-                });
-
-            modelBuilder.Entity("ClientWebsite.Data.Model.RemitList", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<double>("balanceDue");
-
-                    b.Property<long>("checkNumber");
-
-                    b.Property<double>("itemBalanceDue");
-
-                    b.Property<long>("paymentDate");
-
-                    b.Property<long>("refInvoiceAdjNumber");
-
-                    b.Property<int>("refInvoiceAmount");
-
-                    b.Property<long>("refInvoiceDate");
-
-                    b.Property<double>("refInvoiceDiscAmount");
-
-                    b.Property<long>("refInvoiceNumber");
-
-                    b.Property<long>("refOrderNumber");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("RemitLists");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>

@@ -7,3 +7,6 @@ D:\FreshoTracking\Web Api web site\ClientWebsite\ClientWebsite.Data\bin\Debug\ne
 D:\FreshoTracking\Web Api web site\ClientWebsite\ClientWebsite.Data\obj\Debug\netcoreapp2.2\ClientWebsite.Data.csprojAssemblyReference.cache
 D:\FreshoTracking\Web Api web site\ClientWebsite\ClientWebsite.Data\obj\Debug\netcoreapp2.2\ClientWebsite.Data.dll
 D:\FreshoTracking\Web Api web site\ClientWebsite\ClientWebsite.Data\obj\Debug\netcoreapp2.2\ClientWebsite.Data.pdb
+D:\FreshoTracking\Web Api web site\ClientWebsite\ClientWebsite.Data\bin\Debug\netcoreapp2.2\Newtonsoft.Json.dll
+D:\FreshoTracking\Web Api web site\ClientWebsite\ClientWebsite.Data\bin\Debug\netcoreapp2.2\Newtonsoft.Json.xml
+D:\FreshoTracking\Web Api web site\ClientWebsite\ClientWebsite.Data\obj\Debug\netcoreapp2.2\ClientWebsite.Data.csproj.CopyComplete
