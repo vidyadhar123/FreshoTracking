@@ -1,29 +1,29 @@
 <div class="row">
     <div class="uploader">
         <div>
-            <input type="file" (change)="OpenCustomReportXlsFile($event)" style="width: 900px; background-color: #ffc88a; margin: 20px;"
-            />
+            <input type="file" (change)="OpenCustomReportXlsFile($event)"
+                style="width: 900px; background-color: #ffc88a; margin: 20px;" />
         </div>
 
     </div>
     <button (click)="SaveCustomerRecordInDatabase()" class="save_btn">Save</button>
     <div class="uploader">
         <div>
-            <input type="file" (change)="OpenInvoiceListXlsFile($event)" style="width: 900px; background-color: #ffc88a; margin: 20px;"
-            />
+            <input type="file" (change)="OpenInvoiceListXlsFile($event)"
+                style="width: 900px; background-color: #ffc88a; margin: 20px;" />
         </div>
 
     </div>
     <button (click)="SaveInvoiceListInDatabase()" class="save_btn">Save</button>
     <div class="uploader">
         <div>
-            <input type="file" (change)="OpenRemitListXlsFile($event)" style="width: 900px; background-color: #ffc88a; margin: 20px;"
-            />
+            <input type="file" (change)="OpenRemitListXlsFile($event)"
+                style="width: 900px; background-color: #ffc88a; margin: 20px;" />
         </div>
 
     </div>
     <button (click)="SaveRemitListInDatabase()" class="save_btn">Save</button>
-    <p style="text-align: center;
+    <p style="text-align: center; 
 color: red;">{{msg}}</p>
     <!-- <mat-spinner *ngIf="IsSpinnerProgress"></mat-spinner> -->
 

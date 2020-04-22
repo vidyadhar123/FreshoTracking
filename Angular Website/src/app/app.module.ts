@@ -9,6 +9,7 @@ import { FooterModule } from './footer/footer.module';
 import { UploadService } from './services/uploadService';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { DateConverterService } from './services/dateconverter.service';
 
 
 @NgModule({
@@ -25,7 +26,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     BrowserAnimationsModule,
 
   ],
-  providers: [UploadService],
+  providers: [UploadService,DateConverterService],
   bootstrap: [AppComponent],
 })
 export class AppModule { }
