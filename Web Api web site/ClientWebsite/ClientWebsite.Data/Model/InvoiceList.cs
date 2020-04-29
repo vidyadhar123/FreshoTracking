@@ -11,7 +11,7 @@ namespace ClientWebsite.Data.Model
         [JsonProperty(PropertyName = "Invoice Number")]
         public long InvoiceNumber {get;set;}
         [JsonProperty(PropertyName = "Invoice Date")]
-        public long InvoiceDate { get; set; }
+        public string InvoiceDate { get; set; }
         [JsonProperty(PropertyName = "Invoice Amount")]
         public double InvoiceAmount { get; set; }
         [JsonProperty(PropertyName = "PO Number")]

@@ -30,6 +30,7 @@ export class UploadDocumentComponent {
 
 
     OpenCustomReportXlsFile(ev) {
+        debugger;
         this.msg = '';
         this.IsSpinnerProgress = false;
         let workBook = null;
@@ -44,7 +45,8 @@ export class UploadDocumentComponent {
                 initial[name] = XLSX.utils.sheet_to_json(sheet, { dateNF: "MM-DD-YYYY" });
                 return initial;
             }, {});
-            this.filterData = jsonData['customers_report (5)'].filter(x => x.order_source !== 'fba').map(item => {
+            debugger;
+            this.filterData = jsonData['Sheet1'].filter(x => x.order_source !== 'fba').map(item => {
 
                 return Object.assign({}, ...this.customerReportsRequireFields.map(key => ({ [key]: item[key] })));
             });
@@ -109,7 +111,13 @@ export class UploadDocumentComponent {
             this.filterData = jsonData['1'].map(item => {
                 return Object.assign({}, ...this.InvoiceList.map(key => ({ [key]: item[key] })));
             });
-
+            debugger;
+            this.filterData.map((item, index) => {
+               
+                this.filterData[index]['Check Date'] = this._dateService.dateToString(item['Check Date']);
+                this.filterData[index]['Invoice Date'] = this._dateService.dateToString(item['Invoice Date']);
+              
+           })
 
             this.msg = 'document  uploaded sucessfully';
             this.IsSpinnerProgress = true;
@@ -148,25 +156,36 @@ export class UploadDocumentComponent {
         const file = ev.target.files[0];
         reader.onload = (event) => {
             const data = reader.result;
-            workBook = XLSX.read(data, { type: 'binary', cellDates: true });
+            workBook = XLSX.read(data, { type: 'binary' });
             jsonData = workBook.SheetNames.reduce((initial, name) => {
                 const sheet = workBook.Sheets[name];
-                initial[name] = XLSX.utils.sheet_to_json(sheet, { dateNF: "MM-DD-YYYY" });
+                initial[name] = XLSX.utils.sheet_to_json(sheet);
                 return initial;
             }, {});
             jsonData
             debugger;
 
             this.filterData = jsonData['Sheet1'].map(item => {
+               
+
                 return Object.assign({}, ...this.RemitList.map(key => ({ [key]: item[key] })));
             });
-
-            this.filterData.map((item, index) => {
-                this.filterData[index].paymentDate = this._dateService.ExcelDateToJSDate(item.paymentDate);
-                debugger;
-            });
             debugger;
-            this.msg = 'document  uploaded sucessfully';
+
+            this.filterData.map((data,index)=> {
+                this.filterData[index].paymentDate =  data.paymentDate.toString();
+              if(data.refInvoiceDate !== undefined){
+                this.filterData[index].refInvoiceDate = data.refInvoiceDate.toString();
+              }else {
+                this.filterData[index].refInvoiceDate  = '20200425'
+              }
+             
+           
+            })
+            debugger;
+
+            
+           
             this.IsSpinnerProgress = true;
 
         };
@@ -180,6 +199,8 @@ export class UploadDocumentComponent {
     }
 
     insertRemitListRecordResponse(res) {
+        debugger;
+        this.msg = 'document  uploaded sucessfully';
         this.IsSpinnerProgress = false;
         this.msg = '';
         this.msg = res.Message;
