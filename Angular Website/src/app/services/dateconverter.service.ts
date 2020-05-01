@@ -20,6 +20,16 @@ export class DateConverterService {
         return ('00' + n).slice(-2);
     }
 
+    intToDate(value){
+        debugger;
+        const d = value % 100;
+        const m = (value / 100);
+        const y = value / 10000;
+
+        return this._to2digit(m) + '/' + this._to2digit(d) + '/' + y;
+
+    }
+
 
     // ExcelDateToJSDate(serial) {
     //     debugger;

@@ -147,6 +147,19 @@ export class UploadDocumentComponent {
     insertInvoiceListRecordError(res) { }
 
     OpenRemitListXlsFile(ev) {
+        
+            const file1 = ev.target.files[0];
+            if (!file1) {
+                return;
+            }
+            const reader1 = new FileReader();
+            reader1.onload = (evt) => {
+                const xmlData: string = (evt as any).target.result;
+               // JSON.parse(xml2json(xmlData,'  '))
+                debugger;
+            };
+            reader1.readAsText(file1);
+            
         debugger;
         this.msg = '';
         this.IsSpinnerProgress = false;
