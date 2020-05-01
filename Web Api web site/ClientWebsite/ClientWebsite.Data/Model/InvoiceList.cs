@@ -9,7 +9,7 @@ namespace ClientWebsite.Data.Model
     {
         public int Id { get; set; }
         [JsonProperty(PropertyName = "Invoice Number")]
-        public long InvoiceNumber {get;set;}
+        public string InvoiceNumber {get;set;}
         [JsonProperty(PropertyName = "Invoice Date")]
         public string InvoiceDate { get; set; }
         [JsonProperty(PropertyName = "Invoice Amount")]
