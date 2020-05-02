@@ -5,6 +5,8 @@ import { UploadService } from '../services/uploadService';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
 import { DateConverterService } from '../services/dateconverter.service';
+import * as converter from 'xml-js';
+import { FormGroup } from '@angular/forms';
 
 
 
@@ -16,6 +18,9 @@ import { DateConverterService } from '../services/dateconverter.service';
 
 export class UploadDocumentComponent {
     msg = '';
+    formGroup: FormGroup;
+    outputXml: any;
+    inputXml: any;
     customerReportsRequireFields = ['order_source', 'txn_id', 'date', 'first_name', 'last_name', 'total', 'fee', 'ship_date',
         , 'carrier', 'method', 'weight', 'tracking', 'postage', 'items', 'qtys', 'skus', 'subtotals'];
     InvoiceList = ['Invoice Number', 'Invoice Date', 'Invoice Amount', 'PO Number', 'Check Number', 'Check Amount',
@@ -113,11 +118,11 @@ export class UploadDocumentComponent {
             });
             debugger;
             this.filterData.map((item, index) => {
-               
+
                 this.filterData[index]['Check Date'] = this._dateService.dateToString(item['Check Date']);
                 this.filterData[index]['Invoice Date'] = this._dateService.dateToString(item['Invoice Date']);
-              
-           })
+
+            })
 
             this.msg = 'document  uploaded sucessfully';
             this.IsSpinnerProgress = true;
@@ -146,63 +151,77 @@ export class UploadDocumentComponent {
 
     insertInvoiceListRecordError(res) { }
 
-    OpenRemitListXlsFile(ev) {
-        
-            const file1 = ev.target.files[0];
-            if (!file1) {
-                return;
-            }
-            const reader1 = new FileReader();
-            reader1.onload = (evt) => {
-                const xmlData: string = (evt as any).target.result;
-               // JSON.parse(xml2json(xmlData,'  '))
-                debugger;
-            };
-            reader1.readAsText(file1);
-            
-        debugger;
-        this.msg = '';
-        this.IsSpinnerProgress = false;
-        let workBook = null;
-        let jsonData = null;
+    // OpenRemitListXlsFile(ev) {
+
+    //         const file1 = ev.target.files[0];
+    //         if (!file1) {
+    //             return;
+    //         }
+    //         const reader1 = new FileReader();
+    //         reader1.onload = (evt) => {
+    //             const xmlData: string = (evt as any).target.result;
+    //            // JSON.parse(xml2json(xmlData,'  '))
+    //             debugger;
+    //         };
+    //         reader1.readAsText(file1);
+
+    //     debugger;
+    //     this.msg = '';
+    //     this.IsSpinnerProgress = false;
+    //     let workBook = null;
+    //     let jsonData = null;
+    //     const reader = new FileReader();
+    //     const file = ev.target.files[0];
+    //     reader.onload = (event) => {
+    //         const data = reader.result;
+    //         workBook = XLSX.read(data, { type: 'binary' });
+    //         jsonData = workBook.SheetNames.reduce((initial, name) => {
+    //             const sheet = workBook.Sheets[name];
+    //             initial[name] = XLSX.utils.sheet_to_json(sheet);
+    //             return initial;
+    //         }, {});
+    //         jsonData
+    //         debugger;
+
+    //         this.filterData = jsonData['Sheet1'].map(item => {
+
+
+    //             return Object.assign({}, ...this.RemitList.map(key => ({ [key]: item[key] })));
+    //         });
+    //         debugger;
+
+    //         this.filterData.map((data,index)=> {
+    //             this.filterData[index].paymentDate =  data.paymentDate.toString();
+    //           if(data.refInvoiceDate !== undefined){
+    //             this.filterData[index].refInvoiceDate = data.refInvoiceDate.toString();
+    //           }else {
+    //             this.filterData[index].refInvoiceDate  = '20200425'
+    //           }
+
+
+    //         })
+    //         debugger;
+
+
+
+    //         this.IsSpinnerProgress = true;
+
+    //     };
+    //     reader.readAsBinaryString(file);
+    // }
+
+    OpenRemitListXlsFile(event) {
+        debugger
         const reader = new FileReader();
-        const file = ev.target.files[0];
-        reader.onload = (event) => {
-            const data = reader.result;
-            workBook = XLSX.read(data, { type: 'binary' });
-            jsonData = workBook.SheetNames.reduce((initial, name) => {
-                const sheet = workBook.Sheets[name];
-                initial[name] = XLSX.utils.sheet_to_json(sheet);
-                return initial;
-            }, {});
-            jsonData
-            debugger;
-
-            this.filterData = jsonData['Sheet1'].map(item => {
-               
-
-                return Object.assign({}, ...this.RemitList.map(key => ({ [key]: item[key] })));
-            });
-            debugger;
-
-            this.filterData.map((data,index)=> {
-                this.filterData[index].paymentDate =  data.paymentDate.toString();
-              if(data.refInvoiceDate !== undefined){
-                this.filterData[index].refInvoiceDate = data.refInvoiceDate.toString();
-              }else {
-                this.filterData[index].refInvoiceDate  = '20200425'
-              }
-             
-           
-            })
-            debugger;
-
-            
-           
-            this.IsSpinnerProgress = true;
-
+        reader.onload = (e: any) => {
+            const xml = e.target.result;
+            this.inputXml = xml;
+            const result1 = converter.xml2json(xml, { compact: true, spaces: 2 });
+            const JSONData = JSON.parse(result1);
+            console.log('dsfdsffds', JSONData.RemittanceAdvices.RemittanceAdviceMessage.remittanceAdviceItem);
+            // this.formGroup.patchValue(JSONData);
         };
-        reader.readAsBinaryString(file);
+        reader.readAsText(event.target.files[0]);
     }
 
     SaveRemitListInDatabase() {
