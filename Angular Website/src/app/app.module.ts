@@ -10,6 +10,8 @@ import { UploadService } from './services/uploadService';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DateConverterService } from './services/dateconverter.service';
+import { DemoMaterialModule } from './material.module';
+
 
 
 @NgModule({

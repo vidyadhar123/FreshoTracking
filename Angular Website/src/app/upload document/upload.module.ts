@@ -10,7 +10,7 @@ import { UploadDocumentRoutingModule } from './upload-routing.module';
         UploadDocumentComponent
     ],
     imports: [
-        BrowserModule,
+        
         UploadDocumentRoutingModule,
 
 

@@ -7,6 +7,8 @@ import { MatProgressSpinner } from '@angular/material/progress-spinner';
 import { DateConverterService } from '../services/dateconverter.service';
 import * as converter from 'xml-js';
 import { FormGroup } from '@angular/forms';
+import { JsonPipe } from '@angular/common';
+
 
 
 
@@ -28,9 +30,26 @@ export class UploadDocumentComponent {
     RemitList = ["balanceDue", "paymentDate", "checkNumber", "refInvoiceAmount", "refOrderNumber",
         "itemBalanceDue", "refInvoiceNumber", "refInvoiceDate", "refInvoiceDiscAmount", "refInvoiceAdjNumber"];
     filterData: any;
+
+
     IsSpinnerProgress: boolean = false;
     constructor(private ngxXml2jsonService: NgxXml2jsonService, private uploadService: UploadService, private _dateService: DateConverterService
     ) {
+       
+        // var original = [{ id: 1, value1: 500 }, { id: 1,value1:800, value2: 600 }, { id: 2, value1: 700 }, { id: 3, value2: 750 }],
+        // template = { id: null, value1: null, value2: null },
+        // result = Array.from(
+        //     original
+        //         .reduce(
+        //             (m, o) => m.set(o.id, Object.assign({}, m.get(o.id) || template, o)),
+        //             new Map
+        //         )
+        //         .values()
+        // );
+    
+    // console.log(result);
+        
+    //     console.log(result);
     }
 
 
@@ -216,13 +235,26 @@ export class UploadDocumentComponent {
         reader.onload = (e: any) => {
             const xml = e.target.result;
             this.inputXml = xml;
-            const result1 = converter.xml2json(xml, { compact: true, spaces: 2 });
-            const JSONData = JSON.parse(result1);
-            console.log('dsfdsffds', JSONData.RemittanceAdvices.RemittanceAdviceMessage.remittanceAdviceItem);
+            const parser = new DOMParser();
+            const xml12 = parser.parseFromString(xml, 'text/xml');
+            const JSONData = this.ngxXml2jsonService.xmlToJson(xml12);
+            debugger;
+            const RemittData = JSONData
+            // console.log(this.objs);
+            let outerData = RemittData['RemittanceAdvices']['RemittanceAdviceMessage'];
+            const newArr1 =outerData.remittanceAdviceItem.map(v => ({...v,balanceDue:outerData.balanceDue,checkNumber:outerData.checkNumber,paymentDate:outerData.paymentDate }))
+            // console.log('dsfdsffds', JSONData.RemittanceAdvices.RemittanceAdviceMessage.remittanceAdviceItem);
+             this.filterData = newArr1.map(item => {
+                 return Object.assign({}, ...this.RemitList.map(key => ({ [key]: item[key]})));
+            });
+            const data = JSON.stringify(this.filterData, function (key, value) {return (value === undefined) ? null : value});
+             this.filterData = JSON.parse(data);
+            debugger;
             // this.formGroup.patchValue(JSONData);
         };
         reader.readAsText(event.target.files[0]);
     }
+  
 
     SaveRemitListInDatabase() {
         this.uploadService.insertRemitListRecord('https://localhost:44390/api/RemitList/InsertRemitList', this.filterData).
