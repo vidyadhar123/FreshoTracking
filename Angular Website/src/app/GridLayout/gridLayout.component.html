@@ -1,87 +1,60 @@
-<!-- 
+<div class="example-container mat-elevation-z8">
+  <mat-table #table [dataSource]="dataSource">
+
+    <!--- Note that these columns can be defined in any order.
+          The actual rendered columns are set as a property on the row definition" -->
+
+    <!-- Position Column -->
+    <ng-container matColumnDef="position">
+      <mat-header-cell *matHeaderCellDef> No. </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.position}} </mat-cell>
+    </ng-container>
+
+    <!-- Name Column -->
+    <ng-container matColumnDef="name">
+      <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.name}} </mat-cell>
+    </ng-container>
+
+    <!-- Weight Column -->
+    <ng-container matColumnDef="weight">
+      <mat-header-cell *matHeaderCellDef> Weight </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.weight}} </mat-cell>
+    </ng-container>
+
+    <!-- Expanded Content Column - The detail row is made up of this one column -->
+    <ng-container matColumnDef="expandedDetail">
+      <mat-cell *matCellDef="let detail"> 
+				<table>
+					<tr>
+						<th>Company</th>
+						<th>Contact</th>
+						<th>Country</th>
+					</tr>
+					<tr>
+						<td>Alfreds Futterkiste</td>
+						<td>Maria Anders</td>
+						<td>Germany</td>
+					</tr>
+				
+				</table>
+      </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"
+            matRipple 
+            class="element-row" 
+            [class.expanded]="expandedElement == row"
+            (click)="expandedElement = row"></mat-row>
+    <mat-row *matRowDef="let row; columns: ['expandedDetail']; when: isExpansionDetailRow"
+            [@detailExpand]="row.element == expandedElement ? 'expanded' : 'collapsed'"
+            style="overflow: hidden"> 
+    </mat-row>
+  </mat-table>
+</div>
 
 
-
-<mat-accordion displayMode="flat" multi class="mat-table">
-  <section matSort class="mat-elevation-z2 mat-header-row">
-    <span class="mat-header-cell" mat-sort-header="vesselName">Name</span>
-    <span class="mat-header-cell" mat-sort-header="vesselId">Vessel Id</span>
-    <span class="mat-header-cell" mat-sort-header="vesselStatus">Status</span>
-    <span class="mat-header-cell" mat-sort-header="ircs">IRCS</span>
-  </section>
-
-  <mat-expansion-panel *ngFor="let item of displayedRows$">
-    <mat-expansion-panel-header class="mat-row">
-      <span class="mat-cell">{{item.vesselName}}</span>
-      <span class="mat-cell">{{item.vesselId}}</span>
-      <span class="mat-cell">{{item.vesselStatus}}</span>
-      <span class="mat-cell">{{item.ircs}}</span>
-    </mat-expansion-panel-header>
-    <table>
-  <tr>
-    <th>Company</th>
-    <th>Contact</th>
-    <th>Country</th>
-  </tr>
-  <tr>
-    <td>Alfreds Futterkiste</td>
-    <td>Maria Anders</td>
-    <td>Germany</td>
-  </tr>
-  <tr>
-    <td>Centro comercial Moctezuma</td>
-    <td>Francisco Chang</td>
-    <td>Mexico</td>
-  </tr>
-  <tr>
-    <td>Ernst Handel</td>
-    <td>Roland Mendel</td>
-    <td>Austria</td>
-  </tr>
-  <tr>
-    <td>Island Trading</td>
-    <td>Helen Bennett</td>
-    <td>UK</td>
-  </tr>
-  <tr>
-    <td>Laughing Bacchus Winecellars</td>
-    <td>Yoshi Tannamuri</td>
-    <td>Canada</td>
-  </tr>
-  <tr>
-    <td>Magazzini Alimentari Riuniti</td>
-    <td>Giovanni Rovelli</td>
-    <td>Italy</td>
-  </tr>
-</table>
-  </mat-expansion-panel>
-
-</mat-accordion>
-<mat-paginator #paginator
-  [length]="totalRows$ "
-  [pageIndex]="0"
-  [pageSize]="10"
-  [pageSizeOptions]="[5, 10, 25, 100]"
-></mat-paginator> -->
-
-
-
-<mat-accordion displayMode="flat" multi class="mat-table">
-  <section matSort class="mat-elevation-z2 mat-header-row">
-    <span class="mat-header-cell" mat-sort-header="vesselName">Name</span>
-    <span class="mat-header-cell" mat-sort-header="vesselId">Vessel Id</span>
-    <span class="mat-header-cell" mat-sort-header="vesselStatus">Status</span>
-    <span class="mat-header-cell" mat-sort-header="ircs">IRCS</span>
-  </section>
-
-  <mat-expansion-panel *ngFor="let item of displayedRows$ | async">
-    <mat-expansion-panel-header class="mat-row">
-      <span class="mat-cell">{{item.vesselName}}</span>
-      <span class="mat-cell">{{item.vesselId}}</span>
-      <span class="mat-cell">{{item.vesselStatus}}</span>
-      <span class="mat-cell">{{item.ircs}}</span>
-    </mat-expansion-panel-header>
-  
-  </mat-expansion-panel>
-
-</mat-accordion>
+<!-- Copyright 2017 Google Inc. All Rights Reserved.
+    Use of this source code is governed by an MIT-style license that
+    can be found in the LICENSE file at http://angular.io/license -->
