@@ -42,5 +42,11 @@ namespace ClientWebsite.Controllers
                 return BadRequest(new ResponseViewModel { Message = "Internal server error", StatusCode = 500, status = false });
             }
         }
+
+        [HttpGet("GetUsersDetails")]
+        public List<GetUserDetailsModel> GetUsersDetails()
+        {
+            return _customerReporService.GetUsersDetails();
+        }
     }
 }

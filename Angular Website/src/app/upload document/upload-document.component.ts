@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild, ElementRef } from '@angular/core';
 import { NgxXml2jsonService } from 'ngx-xml2json';
 import * as XLSX from 'xlsx';
 import { UploadService } from '../services/uploadService';
@@ -19,6 +19,9 @@ import { JsonPipe } from '@angular/common';
 })
 
 export class UploadDocumentComponent {
+    @ViewChild('customerfile') CutomerFile: ElementRef;
+    @ViewChild('invoicefile') InvoiceFile: ElementRef;
+    @ViewChild('remitfile') RemitFile: ElementRef;
     msg = '';
     formGroup: FormGroup;
     outputXml: any;
@@ -27,36 +30,22 @@ export class UploadDocumentComponent {
         , 'carrier', 'method', 'weight', 'tracking', 'postage', 'items', 'qtys', 'skus', 'subtotals'];
     InvoiceList = ['Invoice Number', 'Invoice Date', 'Invoice Amount', 'PO Number', 'Check Number', 'Check Amount',
         'Check Date', 'Discount'];
-    RemitList = ["balanceDue", "paymentDate", "checkNumber", "refInvoiceAmount", "refOrderNumber",
-        "itemBalanceDue", "refInvoiceNumber", "refInvoiceDate", "refInvoiceDiscAmount", "refInvoiceAdjNumber"];
+    RemitList = ["balanceDue", "paymentDate",
+        "checkNumber", "refInvoiceAmount", "refOrderNumber",
+        "itemBalanceDue", "refInvoiceNumber",
+        "refInvoiceDate", "refInvoiceDiscAmount", "refInvoiceAdjNumber"];
     filterData: any;
-
-
     IsSpinnerProgress: boolean = false;
-    constructor(private ngxXml2jsonService: NgxXml2jsonService, private uploadService: UploadService, private _dateService: DateConverterService
+
+    constructor(private ngxXml2jsonService: NgxXml2jsonService,
+        private uploadService: UploadService,
+        private _dateService: DateConverterService
     ) {
-       
-        // var original = [{ id: 1, value1: 500 }, { id: 1,value1:800, value2: 600 }, { id: 2, value1: 700 }, { id: 3, value2: 750 }],
-        // template = { id: null, value1: null, value2: null },
-        // result = Array.from(
-        //     original
-        //         .reduce(
-        //             (m, o) => m.set(o.id, Object.assign({}, m.get(o.id) || template, o)),
-        //             new Map
-        //         )
-        //         .values()
-        // );
-    
-    // console.log(result);
-        
-    //     console.log(result);
+
     }
 
 
     OpenCustomReportXlsFile(ev) {
-        debugger;
-        this.msg = '';
-        this.IsSpinnerProgress = false;
         let workBook = null;
         let jsonData = null;
         const reader = new FileReader();
@@ -69,7 +58,6 @@ export class UploadDocumentComponent {
                 initial[name] = XLSX.utils.sheet_to_json(sheet, { dateNF: "MM-DD-YYYY" });
                 return initial;
             }, {});
-            debugger;
             this.filterData = jsonData['Sheet1'].filter(x => x.order_source !== 'fba').map(item => {
 
                 return Object.assign({}, ...this.customerReportsRequireFields.map(key => ({ [key]: item[key] })));
@@ -83,42 +71,40 @@ export class UploadDocumentComponent {
                     const dataindex = item.txn_id.toString().lastIndexOf('-');
                     this.filterData[index].txn_id = item.txn_id.slice(dataindex + 1)
                 }
-            })
-            debugger;
+            });
 
-            this.msg = 'document  uploaded sucessfully';
-            this.IsSpinnerProgress = true;
-
+            // this.msg = 'document  uploaded sucessfully';
         };
         reader.readAsBinaryString(file);
     }
 
-
-    // addInput() {
-    //     this.numberOfInputs = this.numberOfInputs + 1;
-    //     this.numberOfInputsArray.push(this.numberOfInputs);
-    // }
-
     SaveCustomerRecordInDatabase() {
-        this.uploadService.insertCustomerRecord('https://localhost:44390/api/CustomerReport/InsertCustomerReport', this.filterData)
-            .subscribe(res =>
-                this.insertRecordResponse(res), res => this.insertRecordError(res));
+        debugger
+        if (this.filterData !== undefined) {
+            this.IsSpinnerProgress = true;
+            this.uploadService.insertCustomerRecord('https://localhost:44390/api/CustomerReport/InsertCustomerReport', this.filterData)
+                .subscribe(res =>
+                    this.insertRecordResponse(res), res => this.insertRecordError(res));
+        } else {
+            this.msg = "Please Upload File"
+
+        }
     }
 
     insertRecordResponse(res) {
+        debugger
         this.IsSpinnerProgress = false;
-        this.msg = '';
-        this.msg = res.Message;
+        this.CutomerFile.nativeElement.value = '';
     }
 
-    insertRecordError(res) { }
+    insertRecordError(res) {
+        this.IsSpinnerProgress = false;
+    }
 
 
     // file uploader for use to convert xls file to json in invoice list
     OpenInvoiceListXlsFile(ev) {
-        debugger;
-        this.msg = '';
-        this.IsSpinnerProgress = false;
+        // this.msg = '';
         let workBook = null;
         let jsonData = null;
         const reader = new FileReader();
@@ -131,106 +117,40 @@ export class UploadDocumentComponent {
                 initial[name] = XLSX.utils.sheet_to_json(sheet, { dateNF: "MM-DD-YYYY" });
                 return initial;
             }, {});
-            debugger;
             this.filterData = jsonData['1'].map(item => {
                 return Object.assign({}, ...this.InvoiceList.map(key => ({ [key]: item[key] })));
             });
-            debugger;
             this.filterData.map((item, index) => {
-
                 this.filterData[index]['Check Date'] = this._dateService.dateToString(item['Check Date']);
                 this.filterData[index]['Invoice Date'] = this._dateService.dateToString(item['Invoice Date']);
 
-            })
-
-            this.msg = 'document  uploaded sucessfully';
-            this.IsSpinnerProgress = true;
-
+            });
         };
         reader.readAsBinaryString(file);
     }
 
     SaveInvoiceListInDatabase() {
-        debugger;
-        this.uploadService.insertInvoiceListRecord('https://localhost:44390/api/InvoiceList/InsertInvoiceListReport', this.filterData).
-            subscribe(res =>
-                this.insertInvoiceListRecordResponse(res), res => this.insertInvoiceListRecordError(res));
+        if (this.filterData !== undefined) {
+            this.IsSpinnerProgress = true;
+            this.uploadService.insertInvoiceListRecord('https://localhost:44390/api/InvoiceList/InsertInvoiceListReport', this.filterData).
+                subscribe(res =>
+                    this.insertInvoiceListRecordResponse(res), res => this.insertInvoiceListRecordError(res));
+        } else {
+            this.msg = "Please Upload File"
+        }
     }
 
     insertInvoiceListRecordResponse(res) {
-        debugger;
         this.IsSpinnerProgress = false;
-        this.msg = '';
-        this.msg = res.Message;
-        // if (res.statusCode === 200) {
-        // } else {
-        //     this.msg = res.Message;
-        // }
+        this.InvoiceFile.nativeElement.value = '';
     }
 
-    insertInvoiceListRecordError(res) { }
+    insertInvoiceListRecordError(res) {
+        this.IsSpinnerProgress = false;
+    }
 
-    // OpenRemitListXlsFile(ev) {
-
-    //         const file1 = ev.target.files[0];
-    //         if (!file1) {
-    //             return;
-    //         }
-    //         const reader1 = new FileReader();
-    //         reader1.onload = (evt) => {
-    //             const xmlData: string = (evt as any).target.result;
-    //            // JSON.parse(xml2json(xmlData,'  '))
-    //             debugger;
-    //         };
-    //         reader1.readAsText(file1);
-
-    //     debugger;
-    //     this.msg = '';
-    //     this.IsSpinnerProgress = false;
-    //     let workBook = null;
-    //     let jsonData = null;
-    //     const reader = new FileReader();
-    //     const file = ev.target.files[0];
-    //     reader.onload = (event) => {
-    //         const data = reader.result;
-    //         workBook = XLSX.read(data, { type: 'binary' });
-    //         jsonData = workBook.SheetNames.reduce((initial, name) => {
-    //             const sheet = workBook.Sheets[name];
-    //             initial[name] = XLSX.utils.sheet_to_json(sheet);
-    //             return initial;
-    //         }, {});
-    //         jsonData
-    //         debugger;
-
-    //         this.filterData = jsonData['Sheet1'].map(item => {
-
-
-    //             return Object.assign({}, ...this.RemitList.map(key => ({ [key]: item[key] })));
-    //         });
-    //         debugger;
-
-    //         this.filterData.map((data,index)=> {
-    //             this.filterData[index].paymentDate =  data.paymentDate.toString();
-    //           if(data.refInvoiceDate !== undefined){
-    //             this.filterData[index].refInvoiceDate = data.refInvoiceDate.toString();
-    //           }else {
-    //             this.filterData[index].refInvoiceDate  = '20200425'
-    //           }
-
-
-    //         })
-    //         debugger;
-
-
-
-    //         this.IsSpinnerProgress = true;
-
-    //     };
-    //     reader.readAsBinaryString(file);
-    // }
 
     OpenRemitListXlsFile(event) {
-        debugger
         const reader = new FileReader();
         reader.onload = (e: any) => {
             const xml = e.target.result;
@@ -238,39 +158,43 @@ export class UploadDocumentComponent {
             const parser = new DOMParser();
             const xml12 = parser.parseFromString(xml, 'text/xml');
             const JSONData = this.ngxXml2jsonService.xmlToJson(xml12);
-            debugger;
-            const RemittData = JSONData
-            // console.log(this.objs);
-            let outerData = RemittData['RemittanceAdvices']['RemittanceAdviceMessage'];
-            const newArr1 =outerData.remittanceAdviceItem.map(v => ({...v,balanceDue:outerData.balanceDue,checkNumber:outerData.checkNumber,paymentDate:outerData.paymentDate }))
-            // console.log('dsfdsffds', JSONData.RemittanceAdvices.RemittanceAdviceMessage.remittanceAdviceItem);
-             this.filterData = newArr1.map(item => {
-                 return Object.assign({}, ...this.RemitList.map(key => ({ [key]: item[key]})));
+            const RemittData = JSONData;
+            const outerData = RemittData['RemittanceAdvices']['RemittanceAdviceMessage'];
+            const newArr1 = outerData.remittanceAdviceItem.
+                map(v =>
+                    ({ ...v, balanceDue: outerData.balanceDue, checkNumber: outerData.checkNumber, paymentDate: outerData.paymentDate }))
+            this.filterData = newArr1.map(item => {
+                return Object.assign({}, ...this.RemitList.map(key => ({ [key]: item[key] })));
             });
-            const data = JSON.stringify(this.filterData, function (key, value) {return (value === undefined) ? null : value});
-             this.filterData = JSON.parse(data);
-            debugger;
-            // this.formGroup.patchValue(JSONData);
+            const data = JSON.stringify(this.filterData, function (key, value) { return (value === undefined) ? null : value });
+
+            this.filterData = JSON.parse(data);
+
+
         };
         reader.readAsText(event.target.files[0]);
     }
-  
+
 
     SaveRemitListInDatabase() {
-        this.uploadService.insertRemitListRecord('https://localhost:44390/api/RemitList/InsertRemitList', this.filterData).
-            subscribe(res =>
-                this.insertRemitListRecordResponse(res), res => this.insertRemitListRecordError(res));
+        if (this.filterData !== undefined) {
+            this.IsSpinnerProgress = true;
+            this.uploadService.insertRemitListRecord('https://localhost:44390/api/RemitList/InsertRemitList', this.filterData).
+                subscribe(res =>
+                    this.insertRemitListRecordResponse(res), res => this.insertRemitListRecordError(res));
+        } else {
+            this.msg = "Please Upload File"
+        }
     }
 
     insertRemitListRecordResponse(res) {
-        debugger;
-        this.msg = 'document  uploaded sucessfully';
         this.IsSpinnerProgress = false;
-        this.msg = '';
-        this.msg = res.Message;
+        this.RemitFile.nativeElement.value = '';
     }
 
-    insertRemitListRecordError(res) { }
+    insertRemitListRecordError(res) {
+        this.IsSpinnerProgress = false;
+    }
 
 }
 

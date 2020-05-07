@@ -9,5 +9,6 @@ namespace ClientWebsite.Service.Customer_Report
   public  interface ICustomer_Report
     {
          Task<string> InsertCustomerReport(List<CustomerReport> requestViewModel);
+        List<GetUserDetailsModel> GetUsersDetails();
     }
 }

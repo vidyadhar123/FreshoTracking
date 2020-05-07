@@ -7,3 +7,12 @@ D:\FreshoTracking\Web Api web site\ClientWebsite\ClientWebsite.ViewModel\obj\Deb
 D:\FreshoTracking\Web Api web site\ClientWebsite\ClientWebsite.ViewModel\obj\Debug\netcoreapp2.2\ClientWebsite.ViewModel.AssemblyInfo.cs
 D:\FreshoTracking\Web Api web site\ClientWebsite\ClientWebsite.ViewModel\obj\Debug\netcoreapp2.2\ClientWebsite.ViewModel.dll
 D:\FreshoTracking\Web Api web site\ClientWebsite\ClientWebsite.ViewModel\obj\Debug\netcoreapp2.2\ClientWebsite.ViewModel.pdb
+D:\05062020\FreshoTracking\Web Api web site\ClientWebsite\ClientWebsite.ViewModel\bin\Debug\netcoreapp2.2\ClientWebsite.ViewModel.deps.json
+D:\05062020\FreshoTracking\Web Api web site\ClientWebsite\ClientWebsite.ViewModel\bin\Debug\netcoreapp2.2\ClientWebsite.ViewModel.dll
+D:\05062020\FreshoTracking\Web Api web site\ClientWebsite\ClientWebsite.ViewModel\bin\Debug\netcoreapp2.2\ClientWebsite.ViewModel.pdb
+D:\05062020\FreshoTracking\Web Api web site\ClientWebsite\ClientWebsite.ViewModel\obj\Debug\netcoreapp2.2\ClientWebsite.ViewModel.csprojAssemblyReference.cache
+D:\05062020\FreshoTracking\Web Api web site\ClientWebsite\ClientWebsite.ViewModel\obj\Debug\netcoreapp2.2\ClientWebsite.ViewModel.csproj.CoreCompileInputs.cache
+D:\05062020\FreshoTracking\Web Api web site\ClientWebsite\ClientWebsite.ViewModel\obj\Debug\netcoreapp2.2\ClientWebsite.ViewModel.AssemblyInfoInputs.cache
+D:\05062020\FreshoTracking\Web Api web site\ClientWebsite\ClientWebsite.ViewModel\obj\Debug\netcoreapp2.2\ClientWebsite.ViewModel.AssemblyInfo.cs
+D:\05062020\FreshoTracking\Web Api web site\ClientWebsite\ClientWebsite.ViewModel\obj\Debug\netcoreapp2.2\ClientWebsite.ViewModel.dll
+D:\05062020\FreshoTracking\Web Api web site\ClientWebsite\ClientWebsite.ViewModel\obj\Debug\netcoreapp2.2\ClientWebsite.ViewModel.pdb

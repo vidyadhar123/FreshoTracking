@@ -444,7 +444,8 @@
       "ClientWebsite.Service/1.0.0": {
         "dependencies": {
           "ClientWebsite.Data": "1.0.0",
-          "ClientWebsite.ViewModel": "1.0.0"
+          "ClientWebsite.ViewModel": "1.0.0",
+          "System.Linq": "4.3.0"
         },
         "runtime": {
           "ClientWebsite.Service.dll": {}

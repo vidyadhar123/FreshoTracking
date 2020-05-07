@@ -1,33 +1,24 @@
+<mat-spinner *ngIf=IsSpinnerProgress style='margin-left:50%;position: absolute;margin-top:10%;'></mat-spinner>
+<div class="row">
 
-   
-        <div class="row">
-           
-            <input type="file" (change)="OpenCustomReportXlsFile($event)"  style="background-color: #ffc88a;" />
-            <label> Please Upload Customer File</label>   
-            <button (click)="SaveCustomerRecordInDatabase()" class="save_btn">Save</button>
-        </div>
-        <div class="row">
-            <input type="file" (change)="OpenInvoiceListXlsFile($event)"  style="background-color: #ffc88a;" />
-            <label> Please Upload Invoice File</label>     
-            <button (click)="SaveInvoiceListInDatabase()" class="save_btn">Save</button>
-        </div>
-        <div class="row">
-            <input type="file" (change)="OpenRemitListXlsFile($event)"
-                style="background-color: #ffc88a;" />
-                <label> Please Upload Remit File</label>  
-                <button (click)="SaveRemitListInDatabase()" class="save_btn">Save</button>
-        </div>
-    
-    
-  
-    <p style="text-align: center; 
+    <input type="file" #customerfile (change)="OpenCustomReportXlsFile($event)" style="background-color: #ffc88a;" />
+    <label> Please Upload Customer File</label>
+    <button (click)="SaveCustomerRecordInDatabase()" class="save_btn">Save</button>
+</div>
+<div class="row">
+    <input type="file" #invoicefile (change)="OpenInvoiceListXlsFile($event)" style="background-color: #ffc88a;" />
+    <label> Please Upload Invoice File</label>
+    <button (click)="SaveInvoiceListInDatabase()" class="save_btn">Save</button>
+</div>
+<div class="row">
+    <input type="file" #remitfile (change)="OpenRemitListXlsFile($event)" style="background-color: #ffc88a;" />
+    <label> Please Upload Remit File</label>
+    <button (click)="SaveRemitListInDatabase()" class="save_btn">Save</button>
+</div>
+
+
+
+<p style="text-align: center; 
 color: red;">{{msg}}</p>
 
 <a [routerLink]="['/Invoicelist']">show Invoice Grid </a>
-    <!-- <mat-spinner *ngIf="IsSpinnerProgress"></mat-spinner> -->
-
-    <!-- <div class="row">
-    <div class="buttonaddfile">
-        <button (click)="addInput()">Add more files</button>
-    </div>
-</div> -->

@@ -10,3 +10,15 @@ D:\FreshoTracking\Web Api web site\ClientWebsite\ClientWebsite.Data\obj\Debug\ne
 D:\FreshoTracking\Web Api web site\ClientWebsite\ClientWebsite.Data\bin\Debug\netcoreapp2.2\Newtonsoft.Json.dll
 D:\FreshoTracking\Web Api web site\ClientWebsite\ClientWebsite.Data\bin\Debug\netcoreapp2.2\Newtonsoft.Json.xml
 D:\FreshoTracking\Web Api web site\ClientWebsite\ClientWebsite.Data\obj\Debug\netcoreapp2.2\ClientWebsite.Data.csproj.CopyComplete
+D:\05062020\FreshoTracking\Web Api web site\ClientWebsite\ClientWebsite.Data\bin\Debug\netcoreapp2.2\ClientWebsite.Data.deps.json
+D:\05062020\FreshoTracking\Web Api web site\ClientWebsite\ClientWebsite.Data\bin\Debug\netcoreapp2.2\ClientWebsite.Data.dll
+D:\05062020\FreshoTracking\Web Api web site\ClientWebsite\ClientWebsite.Data\bin\Debug\netcoreapp2.2\ClientWebsite.Data.pdb
+D:\05062020\FreshoTracking\Web Api web site\ClientWebsite\ClientWebsite.Data\bin\Debug\netcoreapp2.2\Newtonsoft.Json.dll
+D:\05062020\FreshoTracking\Web Api web site\ClientWebsite\ClientWebsite.Data\bin\Debug\netcoreapp2.2\Newtonsoft.Json.xml
+D:\05062020\FreshoTracking\Web Api web site\ClientWebsite\ClientWebsite.Data\obj\Debug\netcoreapp2.2\ClientWebsite.Data.csprojAssemblyReference.cache
+D:\05062020\FreshoTracking\Web Api web site\ClientWebsite\ClientWebsite.Data\obj\Debug\netcoreapp2.2\ClientWebsite.Data.csproj.CoreCompileInputs.cache
+D:\05062020\FreshoTracking\Web Api web site\ClientWebsite\ClientWebsite.Data\obj\Debug\netcoreapp2.2\ClientWebsite.Data.AssemblyInfoInputs.cache
+D:\05062020\FreshoTracking\Web Api web site\ClientWebsite\ClientWebsite.Data\obj\Debug\netcoreapp2.2\ClientWebsite.Data.AssemblyInfo.cs
+D:\05062020\FreshoTracking\Web Api web site\ClientWebsite\ClientWebsite.Data\obj\Debug\netcoreapp2.2\ClientWebsite.Data.csproj.CopyComplete
+D:\05062020\FreshoTracking\Web Api web site\ClientWebsite\ClientWebsite.Data\obj\Debug\netcoreapp2.2\ClientWebsite.Data.dll
+D:\05062020\FreshoTracking\Web Api web site\ClientWebsite\ClientWebsite.Data\obj\Debug\netcoreapp2.2\ClientWebsite.Data.pdb

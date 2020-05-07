@@ -8,6 +8,7 @@ using ClientWebsite.Data;
 using ClientWebsite.Service;
 using ClientWebsite.Service.Customer_Report;
 using ClientWebsite.Service.InvoiceLists;
+using ClientWebsite.Service.RemitLists;
 
 namespace ClientWebsite
 {
@@ -43,6 +44,7 @@ namespace ClientWebsite
             #region add scope for DI
             services.AddScoped<ICustomer_Report, CustomerReportService>();
             services.AddScoped<IInvoiceList, InvoiceListService>();
+            services.AddScoped<IRemitList, RemitListService>();
             #endregion
 
         }

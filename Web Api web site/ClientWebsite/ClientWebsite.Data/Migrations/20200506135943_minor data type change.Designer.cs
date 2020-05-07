@@ -4,14 +4,16 @@ using ClientWebsite.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace ClientWebsite.Data.Migrations
 {
     [DbContext(typeof(OrderManagementDbContext))]
-    partial class OrderManagementDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200506135943_minor data type change")]
+    partial class minordatatypechange
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -116,8 +118,7 @@ namespace ClientWebsite.Data.Migrations
 
                     b.Property<string>("refInvoiceNumber");
 
-                    b.Property<string>("refOrderNumber")
-                        .IsRequired();
+                    b.Property<string>("refOrderNumber");
 
                     b.HasKey("Id");
 

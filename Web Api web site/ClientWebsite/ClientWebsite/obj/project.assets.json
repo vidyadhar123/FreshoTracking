@@ -4811,7 +4811,8 @@
         "framework": ".NETCoreApp,Version=v2.2",
         "dependencies": {
           "ClientWebsite.Data": "1.0.0",
-          "ClientWebsite.ViewModel": "1.0.0"
+          "ClientWebsite.ViewModel": "1.0.0",
+          "System.Linq": "4.3.0"
         },
         "compile": {
           "bin/placeholder/ClientWebsite.Service.dll": {}
@@ -13149,11 +13150,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\FreshoTracking\\Web Api web site\\ClientWebsite\\ClientWebsite\\ClientWebsite.csproj",
+      "projectUniqueName": "D:\\05062020\\FreshoTracking\\Web Api web site\\ClientWebsite\\ClientWebsite\\ClientWebsite.csproj",
       "projectName": "ClientWebsite",
-      "projectPath": "D:\\FreshoTracking\\Web Api web site\\ClientWebsite\\ClientWebsite\\ClientWebsite.csproj",
+      "projectPath": "D:\\05062020\\FreshoTracking\\Web Api web site\\ClientWebsite\\ClientWebsite\\ClientWebsite.csproj",
       "packagesPath": "C:\\Users\\Ravi Pandey\\.nuget\\packages\\",
-      "outputPath": "D:\\FreshoTracking\\Web Api web site\\ClientWebsite\\ClientWebsite\\obj\\",
+      "outputPath": "D:\\05062020\\FreshoTracking\\Web Api web site\\ClientWebsite\\ClientWebsite\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
@@ -13172,14 +13173,14 @@
       "frameworks": {
         "netcoreapp2.2": {
           "projectReferences": {
-            "D:\\FreshoTracking\\Web Api web site\\ClientWebsite\\ClientWebsite.Data\\ClientWebsite.Data.csproj": {
-              "projectPath": "D:\\FreshoTracking\\Web Api web site\\ClientWebsite\\ClientWebsite.Data\\ClientWebsite.Data.csproj"
+            "D:\\05062020\\FreshoTracking\\Web Api web site\\ClientWebsite\\ClientWebsite.Data\\ClientWebsite.Data.csproj": {
+              "projectPath": "D:\\05062020\\FreshoTracking\\Web Api web site\\ClientWebsite\\ClientWebsite.Data\\ClientWebsite.Data.csproj"
             },
-            "D:\\FreshoTracking\\Web Api web site\\ClientWebsite\\ClientWebsite.Service\\ClientWebsite.Service.csproj": {
-              "projectPath": "D:\\FreshoTracking\\Web Api web site\\ClientWebsite\\ClientWebsite.Service\\ClientWebsite.Service.csproj"
+            "D:\\05062020\\FreshoTracking\\Web Api web site\\ClientWebsite\\ClientWebsite.Service\\ClientWebsite.Service.csproj": {
+              "projectPath": "D:\\05062020\\FreshoTracking\\Web Api web site\\ClientWebsite\\ClientWebsite.Service\\ClientWebsite.Service.csproj"
             },
-            "D:\\FreshoTracking\\Web Api web site\\ClientWebsite\\ClientWebsite.ViewModel\\ClientWebsite.ViewModel.csproj": {
-              "projectPath": "D:\\FreshoTracking\\Web Api web site\\ClientWebsite\\ClientWebsite.ViewModel\\ClientWebsite.ViewModel.csproj"
+            "D:\\05062020\\FreshoTracking\\Web Api web site\\ClientWebsite\\ClientWebsite.ViewModel\\ClientWebsite.ViewModel.csproj": {
+              "projectPath": "D:\\05062020\\FreshoTracking\\Web Api web site\\ClientWebsite\\ClientWebsite.ViewModel\\ClientWebsite.ViewModel.csproj"
             }
           }
         }

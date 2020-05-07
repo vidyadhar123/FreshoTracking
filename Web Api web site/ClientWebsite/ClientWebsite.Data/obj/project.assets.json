@@ -4375,11 +4375,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\FreshoTracking\\Web Api web site\\ClientWebsite\\ClientWebsite.Data\\ClientWebsite.Data.csproj",
+      "projectUniqueName": "D:\\05062020\\FreshoTracking\\Web Api web site\\ClientWebsite\\ClientWebsite.Data\\ClientWebsite.Data.csproj",
       "projectName": "ClientWebsite.Data",
-      "projectPath": "D:\\FreshoTracking\\Web Api web site\\ClientWebsite\\ClientWebsite.Data\\ClientWebsite.Data.csproj",
+      "projectPath": "D:\\05062020\\FreshoTracking\\Web Api web site\\ClientWebsite\\ClientWebsite.Data\\ClientWebsite.Data.csproj",
       "packagesPath": "C:\\Users\\Ravi Pandey\\.nuget\\packages\\",
-      "outputPath": "D:\\FreshoTracking\\Web Api web site\\ClientWebsite\\ClientWebsite.Data\\obj\\",
+      "outputPath": "D:\\05062020\\FreshoTracking\\Web Api web site\\ClientWebsite\\ClientWebsite.Data\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
