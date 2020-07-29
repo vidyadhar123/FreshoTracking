@@ -89,7 +89,7 @@ export class UploadDocumentComponent {
         debugger
         if (this.filterData !== undefined) {
             this.IsSpinnerProgress = true;
-            this.uploadService.insertCustomerRecord('https://localhost:44390/api/CustomerReport/InsertCustomerReport', this.filterData)
+            this.uploadService.insertCustomerRecord('/api/CustomerReport/InsertCustomerReport', this.filterData)
                 .subscribe(res =>
                     this.insertRecordResponse(res), res => this.insertRecordError(res));
         } else {
@@ -139,7 +139,7 @@ export class UploadDocumentComponent {
     SaveInvoiceListInDatabase() {
         if (this.filterData !== undefined) {
             this.IsSpinnerProgress = true;
-            this.uploadService.insertInvoiceListRecord('https://localhost:44390/api/InvoiceList/InsertInvoiceListReport', this.filterData).
+            this.uploadService.insertInvoiceListRecord('/api/InvoiceList/InsertInvoiceListReport', this.filterData).
                 subscribe(res =>
                     this.insertInvoiceListRecordResponse(res), res => this.insertInvoiceListRecordError(res));
         } else {
@@ -194,7 +194,7 @@ export class UploadDocumentComponent {
     SaveRemitListInDatabase() {
         if (this.filterData !== undefined) {
             this.IsSpinnerProgress = true;
-            this.uploadService.insertRemitListRecord('https://localhost:44390/api/RemitList/InsertRemitList', this.filterData).
+            this.uploadService.insertRemitListRecord('/api/RemitList/InsertRemitList', this.filterData).
                 subscribe(res =>
                     this.insertRemitListRecordResponse(res), res => this.insertRemitListRecordError(res));
         } else {

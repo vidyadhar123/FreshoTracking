@@ -41,7 +41,7 @@ export class GridLayoutComponent {
 
   ngOnInit(){
     this.IsSpinnerProgress = true;
-    this.uploadService.getCustomerRecord('https://localhost:44390/api/CustomerReport/GetUsersDetails')
+    this.uploadService.getCustomerRecord('/api/CustomerReport/GetUsersDetails')
     .subscribe(res =>
         this.insertRecordResponse(res), res => this.insertRecordError(res));
 

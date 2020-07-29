@@ -2,11 +2,16 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpHeaderResponse, HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map, mergeMap, catchError } from 'rxjs/operators';
+import { environment } from 'src/environments/environment';
 
 
 @Injectable()
 export class UploadService {
-    constructor(private http: HttpClient) { }
+    Url: string;
+  
+    constructor(private http: HttpClient) { 
+        this.Url = environment.baseUrl;
+    }
 
     getHeader() {
         const newHeaders = new HttpHeaders({ 'Content-Type': 'application/json' });
@@ -26,14 +31,14 @@ export class UploadService {
 
     insertCustomerRecord(url: string, body): Observable<any> {
         debugger;
-        return this.http.post(url, body, { headers: this.getHeader() })
+        return this.http.post(this.Url+url, body, { headers: this.getHeader() })
             .pipe(
                 catchError(this.handleError)
             );
     }
 
     insertInvoiceListRecord(url: string, body): Observable<any> {
-        return this.http.post(url, body, { headers: this.getHeader() })
+        return this.http.post(this.Url+url, body, { headers: this.getHeader() })
             .pipe(
                 catchError(this.handleError)
             );
@@ -41,7 +46,7 @@ export class UploadService {
 
     insertRemitListRecord(url: string, body): Observable<any> {
         debugger;
-        return this.http.post(url, body, { headers: this.getHeader() })
+        return this.http.post(this.Url+url, body, { headers: this.getHeader() })
             .pipe(
                 catchError(this.handleError)
             );
@@ -49,7 +54,7 @@ export class UploadService {
 
 
     getCustomerRecord(url:string){
-        return this.http.get(url,{ headers: this.getHeader() })
+        return this.http.get(this.Url+url,{ headers: this.getHeader() })
         .pipe(
             catchError(this.handleError)
         );
