@@ -26,8 +26,10 @@ export class UploadDocumentComponent {
     formGroup: FormGroup;
     outputXml: any;
     inputXml: any;
-    customerReportsRequireFields = ['order_source', 'txn_id', 'date', 'first_name', 'last_name', 'total', 'fee', 'ship_date',
-        , 'carrier', 'method', 'weight', 'tracking', 'postage', 'items', 'qtys', 'skus', 'subtotals'];
+    customerReportsRequireFields = ['order_source', 'txn_id', 'date', 'name', 'total', 'fee', 'ship_date',
+        , 'carrier', 'method', 'weight', 'tracking', 'postage', 'item_name', 'quantity', 'subtotal', 'queue_id', 'item_description',
+        , 'item_sku', 'line_number', 'location', 'num_order_lines',
+        , 'payment_type', 'postage_account', 'shipping', 'status', 'tax', 'tnx_seq'];
     InvoiceList = ['Invoice Number', 'Invoice Date', 'Invoice Amount', 'PO Number', 'Check Number', 'Check Amount',
         'Check Date', 'Discount'];
     RemitList = ["balanceDue", "paymentDate",
@@ -72,6 +74,11 @@ export class UploadDocumentComponent {
                     this.filterData[index].txn_id = item.txn_id.slice(dataindex + 1)
                 }
             });
+
+
+            this.filterData;
+            debugger;
+
 
             // this.msg = 'document  uploaded sucessfully';
         };
@@ -155,7 +162,7 @@ export class UploadDocumentComponent {
         reader.onload = (e: any) => {
             const xml = e.target.result;
             this.inputXml = xml;
-            const parser = new DOMParser();
+            const parser = new DOMParser()    ;
             const xml12 = parser.parseFromString(xml, 'text/xml');
             const JSONData = this.ngxXml2jsonService.xmlToJson(xml12);
             const RemittData = JSONData;
@@ -167,8 +174,16 @@ export class UploadDocumentComponent {
                 return Object.assign({}, ...this.RemitList.map(key => ({ [key]: item[key] })));
             });
             const data = JSON.stringify(this.filterData, function (key, value) { return (value === undefined) ? null : value });
-
+            
             this.filterData = JSON.parse(data);
+
+            this.filterData.map((item, index)=> {
+                this.filterData[index].refOrderNumber = this.filterData[index].refOrderNumber.replace(/^0+/, '');
+            })
+
+            this.filterData;
+            debugger;
+
 
 
         };

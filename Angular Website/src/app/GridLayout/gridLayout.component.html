@@ -1,60 +1,90 @@
 <div class="example-container mat-elevation-z8">
-  <mat-table #table [dataSource]="dataSource">
+<table mat-table
+       [dataSource]="dataSource" multiTemplateDataRows
+       class="mat-elevation-z8" > 
+  <ng-container matColumnDef="txnId" >
+    <th mat-header-cell *matHeaderCellDef> Order Id  </th>
+    <td mat-cell *matCellDef="let element">  {{element.txnId}} </td>
+  </ng-container>
 
-    <!--- Note that these columns can be defined in any order.
-          The actual rendered columns are set as a property on the row definition" -->
+  
 
-    <!-- Position Column -->
-    <ng-container matColumnDef="position">
-      <mat-header-cell *matHeaderCellDef> No. </mat-header-cell>
-      <mat-cell *matCellDef="let element"> {{element.position}} </mat-cell>
-    </ng-container>
+  <ng-container matColumnDef="date" >
+    <th mat-header-cell *matHeaderCellDef> Date </th>
+    <td mat-cell *matCellDef="let element">  {{element.date}} </td>
+  </ng-container>
 
-    <!-- Name Column -->
-    <ng-container matColumnDef="name">
-      <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
-      <mat-cell *matCellDef="let element"> {{element.name}} </mat-cell>
-    </ng-container>
+  <!-- <ng-container matColumnDef="orderSource" >
+    <th mat-header-cell *matHeaderCellDef> orderSource </th>
+    <td mat-cell *matCellDef="let element">  {{element.orderSource}} </td>
+  </ng-container> -->
 
-    <!-- Weight Column -->
-    <ng-container matColumnDef="weight">
-      <mat-header-cell *matHeaderCellDef> Weight </mat-header-cell>
-      <mat-cell *matCellDef="let element"> {{element.weight}} </mat-cell>
-    </ng-container>
+  <ng-container matColumnDef="customerName" >
+    <th mat-header-cell *matHeaderCellDef>CustomerName </th>
+    <td mat-cell *matCellDef="let element">  {{element.customerName}} </td>
+  </ng-container>
 
-    <!-- Expanded Content Column - The detail row is made up of this one column -->
-    <ng-container matColumnDef="expandedDetail">
-      <mat-cell *matCellDef="let detail"> 
-				<table>
-					<tr>
-						<th>Company</th>
-						<th>Contact</th>
-						<th>Country</th>
-					</tr>
-					<tr>
-						<td>Alfreds Futterkiste</td>
-						<td>Maria Anders</td>
-						<td>Germany</td>
-					</tr>
-				
-				</table>
-      </mat-cell>
-    </ng-container>
+  <ng-container matColumnDef="totalQtyShipped" >
+    <th mat-header-cell *matHeaderCellDef>Total Qty  </th>
+    <td mat-cell *matCellDef="let element">  {{element.totalQtyShipped}} </td>
+  </ng-container>
 
-    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-    <mat-row *matRowDef="let row; columns: displayedColumns;"
-            matRipple 
-            class="element-row" 
-            [class.expanded]="expandedElement == row"
-            (click)="expandedElement = row"></mat-row>
-    <mat-row *matRowDef="let row; columns: ['expandedDetail']; when: isExpansionDetailRow"
-            [@detailExpand]="row.element == expandedElement ? 'expanded' : 'collapsed'"
-            style="overflow: hidden"> 
-    </mat-row>
-  </mat-table>
+  <ng-container matColumnDef="totalInvoiced" >
+    <th mat-header-cell *matHeaderCellDef>	Total Invoiced  </th>
+    <td mat-cell *matCellDef="let element">  {{element.totalInvoiced}} </td>
+  </ng-container>
+
+
+  <ng-container matColumnDef="checkNumber" >
+    <th mat-header-cell *matHeaderCellDef>checkNumber  </th>
+    <td mat-cell *matCellDef="let element">  {{element.checkNumber}} </td>
+  </ng-container>
+  
+
+
+
+
+  <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
+  <ng-container matColumnDef="expandedDetail">
+    <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplay.length">
+      <div class="example-element-detail"
+           [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
+        <!-- <div class="example-element-diagram"> -->
+          <table>
+            <tr>
+              <th>SKU 1</th>
+              <th>SKU 2</th>
+              <th>Ship date</th>
+              <th>Tracking ID </th>
+              <th>	Discount Amount</th>
+              <th>Warehouse fee</th> 
+            </tr>
+            <tr>
+              <td>{{element.skus1}}</td>
+              <td>{{element.skus2}}</td>
+              <td>{{element.shipDate}}</td>
+              <td>{{element.trackingID}}</td>
+              <td>{{element.discountAmount}}</td>
+              <td>{{element.warehouseFee}}</td>
+              
+            </tr>
+          </table>
+        <!-- </div> -->
+       
+      </div>
+    </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+  <tr mat-row *matRowDef="let element; columns: columnsToDisplay;"
+      class="example-element-row"
+      [class.example-expanded-row]="expandedElement === element"
+      (click)="expandedElement = expandedElement === element ? null : element">
+  </tr>
+  <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
+</table>
+
+<mat-paginator [pageSizeOptions]="[4, 6, 10, 15]"></mat-paginator>
 </div>
 
-
-<!-- Copyright 2017 Google Inc. All Rights Reserved.
-    Use of this source code is governed by an MIT-style license that
-    can be found in the LICENSE file at http://angular.io/license -->
+<mat-spinner *ngIf=IsSpinnerProgress style='margin-left:50%;position: absolute;margin-top:10%;'></mat-spinner>

@@ -44,47 +44,25 @@ namespace ClientWebsite.Service.Customer_Report
             {
 
 
-                    var lst = (from cus in _orderManagementDbContext.CustomerReport
-                               join inv in _orderManagementDbContext.InvoiceList on cus.txn_id equals inv.InvoiceNumber
-                               //join rem in _orderManagementDbContext.RemitLists on inv.InvoiceNumber equals rem.refOrderNumber
-                               select new { cus, inv }).Select(x => new GetUserDetailsModel
-                               {
-                               OrderSource = x.cus.order_source,
-                               Date=x.cus.date,
-                               FirstName=x.cus.first_name,
-                                LastName=x.cus.last_name,
-                                Total=x.cus.total,
-                                Fee=x.cus.fee,
-                                ShipDate=x.cus.ship_date,
-                                Carrier=x.cus.carrier,
-                                Method =x.cus.method,
-                                Weight=x.cus.weight,
-                                Tracking=x.cus.tracking,
-                                Postage=x.cus.postage,
-                                Items=x.cus.items,
-                                 Qtys=x.cus.qtys,
-                                Skus=x.cus.skus,
-                                Subtotals=x.cus.subtotals,
-                                InvoiceNumber=x.inv.InvoiceNumber,
-                                InvoiceDate=x.inv.InvoiceDate,
-                                InvoiceAmount=x.inv.InvoiceAmount,
-                                PoNumber=x.inv.PoNumber,
-                                CheckNumber=x.inv.CheckNumber,
-                                CheckAmount=x.inv.CheckAmount,
-                                CheckDate=x.inv.CheckDate,
-                                Discount =x.inv.Discount,
-                                   //BalanceDue = x.rem.balanceDue,
-                                   //PaymentDate = x.rem.paymentDate,
-                                   //CheckNumberInvoice = x.rem.checkNumber,
-                                   //RefInvoiceAmount = x.rem.refInvoiceAmount,
-                                   //RefOrderNumber = x.rem.refOrderNumber,
-                                   //ItemBalanceDue = x.rem.itemBalanceDue,
-                                   //RefInvoiceNumber = x.rem.refInvoiceNumber,
-                                   //RefInvoiceDate = x.rem.refInvoiceDate,
-                                   //RefInvoiceDiscAmount = x.rem.refInvoiceDiscAmount,
-                                   //RefInvoiceAdjNumber = x.rem.refInvoiceAdjNumber
-                               }).ToList();
-                    return lst;
+                var lst = (from cus in _orderManagementDbContext.CustomerReport
+                              //join inv in _orderManagementDbContext.InvoiceList on cus.txn_id equals inv.InvoiceNumber
+                          join rem in _orderManagementDbContext.RemitLists on cus.txn_id equals rem.refOrderNumber
+                          select new { cus, rem }).Select(x => new GetUserDetailsModel
+                          {
+                              TxnId = x.cus.txn_id,
+                              Date = x.cus.date,
+                              CustomerName = x.cus.name,
+                              TotalQtyShipped = x.cus.quantity,
+                              TotalInvoiced = x.cus.subtotal,
+                              CheckNumber = x.rem.checkNumber,
+                              Skus1 = x.cus.item_sku,
+                              Skus2 = x.cus.item_sku,
+                              ShipDate = x.cus.ship_date,
+                              TrackingID = x.cus.tracking,
+                              DiscountAmount = x.rem.refInvoiceDiscAmount,
+                              WarehouseFee = 0.5 * x.cus.quantity
+                          }).ToList();
+                return lst;
                 
               
             }

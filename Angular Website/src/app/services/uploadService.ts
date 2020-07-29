@@ -47,6 +47,14 @@ export class UploadService {
             );
     }
 
+
+    getCustomerRecord(url:string){
+        return this.http.get(url,{ headers: this.getHeader() })
+        .pipe(
+            catchError(this.handleError)
+        );
+    }
+
     private handleError(error: Response) {
         console.error(error);
         return Observable.throw(error || 'Server error');
