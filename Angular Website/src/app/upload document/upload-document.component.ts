@@ -8,6 +8,7 @@ import { DateConverterService } from '../services/dateconverter.service';
 import * as converter from 'xml-js';
 import { FormGroup } from '@angular/forms';
 import { JsonPipe } from '@angular/common';
+import { NotificationService } from '../services/notification.service';
 
 
 
@@ -41,7 +42,8 @@ export class UploadDocumentComponent {
 
     constructor(private ngxXml2jsonService: NgxXml2jsonService,
         private uploadService: UploadService,
-        private _dateService: DateConverterService
+        private _dateService: DateConverterService,
+        private notificationService:NotificationService
     ) {
 
     }
@@ -100,12 +102,15 @@ export class UploadDocumentComponent {
 
     insertRecordResponse(res) {
         debugger
+        this.notificationService.showSuccess('file saved sucessfully','fresho.com');
         this.IsSpinnerProgress = false;
         this.CutomerFile.nativeElement.value = '';
     }
 
     insertRecordError(res) {
         this.IsSpinnerProgress = false;
+        this.notificationService.showSuccess('Eroor on uploading file please contact to admin','fresho.com')
+
     }
 
 
@@ -148,12 +153,15 @@ export class UploadDocumentComponent {
     }
 
     insertInvoiceListRecordResponse(res) {
+        this.notificationService.showSuccess('file saved sucessfully','fresho.com')
         this.IsSpinnerProgress = false;
         this.InvoiceFile.nativeElement.value = '';
     }
 
     insertInvoiceListRecordError(res) {
         this.IsSpinnerProgress = false;
+        this.notificationService.showSuccess('Eroor on uploading file please contact to admin','fresho.com')
+
     }
 
 
@@ -203,11 +211,13 @@ export class UploadDocumentComponent {
     }
 
     insertRemitListRecordResponse(res) {
+        this.notificationService.showSuccess('file saved sucessfully','fresho.com')
         this.IsSpinnerProgress = false;
         this.RemitFile.nativeElement.value = '';
     }
 
     insertRemitListRecordError(res) {
+        this.notificationService.showSuccess('Eroor on uploading file please contact to admin','fresho.com')
         this.IsSpinnerProgress = false;
     }
 

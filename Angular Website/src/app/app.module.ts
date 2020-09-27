@@ -11,7 +11,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DateConverterService } from './services/dateconverter.service';
 import { DemoMaterialModule } from './material.module';
-
+import { ToastrModule } from 'ngx-toastr';
 
 
 @NgModule({
@@ -26,6 +26,7 @@ import { DemoMaterialModule } from './material.module';
     FooterModule,
     HttpClientModule,
     BrowserAnimationsModule,
+    ToastrModule.forRoot()
 
   ],
   providers: [UploadService,DateConverterService],
